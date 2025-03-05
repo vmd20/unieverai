@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Unilever AI Prototype</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f8f9fa;
+            margin: 0;
+            padding: 0;
+            text-align: center;
+            background: url('/Users/lala/Desktop/AI MODEL/Captura de pantalla 2025-03-05 a las 16.13.13.png') no-repeat center center fixed;
+            background-size: cover;
+        }
+        .container {
+            max-width: 800px;
+            margin: 50px auto;
+            background: rgba(255, 255, 255, 0.8);
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            color: #0057b8;
+        }
+        .button {
+            display: inline-block;
+            padding: 10px 20px;
+            margin: 10px;
+            text-decoration: none;
+            color: white;
+            background-color: #0078d4;
+            border-radius: 5px;
+            font-size: 16px;
+            border: none;
+            cursor: pointer;
+        }
+        .button:hover {
+            background-color: #0057b8;
+        }
+        .output {
+            margin-top: 20px;
+            padding: 10px;
+            background: #eef3f7;
+            border-radius: 5px;
+            display: none;
+        }
+        video {
+            width: 100%;
+            max-width: 400px;
+            margin-top: 20px;
+            display: none;
+        }
+    </style>
+    <script>
+        let videoStream;
+        function getForecast() {
+            document.getElementById("output").style.display = "block";
+            document.getElementById("output").innerHTML = "Estimated demand forecast: \n- Beverages: 10% increase next quarter\n- Dairy: Stable demand\n- Packaged food: 5% decline.\n\nStock movement optimization in progress...";
+        }
+        
+        function getSmartPricing() {
+            document.getElementById("output").style.display = "block";
+            document.getElementById("output").innerHTML = "Recommended price reductions for near-expiry products: \n- Beverages: 15% discount\n- Dairy: 25% discount\n- Packaged food: 10% discount.\n\nExpected waste reduction: 30%.";
+        }
+        
+        function getRedistribution() {
+            document.getElementById("output").style.display = "block";
+            document.getElementById("output").innerHTML = "Redistribution strategy: \n- Move 20% of low-demand beverages to high-demand urban areas.\n- Shift 30% of dairy products to retailers with higher turnover.\n- Adjust packaged food distribution by 15% to match regional demand.\n\nGoal: Reduce overall waste by 40%.";
+        }
+        
+        function startBarcodeScan() {
+            const video = document.getElementById("camera");
+            video.style.display = "block";
+            navigator.mediaDevices.getUserMedia({ video: { facingMode: "environment" } })
+                .then(function(stream) {
+                    video.srcObject = stream;
+                    videoStream = stream;
+                    video.play();
+                })
+                .catch(function(err) {
+                    document.getElementById("output").style.display = "block";
+                    document.getElementById("output").innerHTML = "Error accessing camera: " + err;
+                });
+        }
+        
+        function stopBarcodeScan() {
+            if (videoStream) {
+                let tracks = videoStream.getTracks();
+                tracks.forEach(track => track.stop());
+            }
+            document.getElementById("camera").style.display = "none";
+            document.getElementById("output").style.display = "block";
+            document.getElementById("output").innerHTML = "Scanning barcode...\n\nProduct: Milk (Example)\nExpiration Date: 5 days left\nSuggested Distribution: Move to high-demand retail stores\nRecommended Price Reduction: 20% discount.";
+        }
+    </script>
+</head>
+<body>
+    <div class="container">
+        <h1>Unilever AI Prototype</h1>
+        <p>Enhancing Inventory, Pricing, and Redistribution Efficiency</p>
+        <button class="button" onclick="getForecast()">Inventory Forecast</button>
+        <button class="button" onclick="getSmartPricing()">Smart Pricing</button>
+        <button class="button" onclick="getRedistribution()">Product Redistribution</button>
+        <button class="button" onclick="startBarcodeScan()">Start Barcode Scan</button>
+        <button class="button" onclick="stopBarcodeScan()">Stop Scan</button>
+        <video id="camera"></video>
+        <div id="output" class="output"></div>
+    </div>
+</body>
+</html>
+
+
+
+
+
